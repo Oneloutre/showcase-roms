@@ -129,7 +129,9 @@ export default function OnelotShowcaseRedesign() {
                             <CardDescription className="text-purple-300">{device.codename}</CardDescription>
                           </CardHeader>
                           <CardContent>
-                            <img src={device.image} alt={device.name} className="w-full h-auto rounded-lg" />
+                            <a href={device.download} target="_blank" rel="noopener noreferrer">
+                              <img src={device.image} alt={device.name} className="w-full h-auto rounded-lg"/>
+                            </a>
                           </CardContent>
                         </Card>
                     ))}
@@ -148,7 +150,9 @@ export default function OnelotShowcaseRedesign() {
                             <CardDescription className="text-purple-300">{device.codename}</CardDescription>
                           </CardHeader>
                           <CardContent>
-                            <img src={device.image} alt={device.name} className="w-full h-auto rounded-lg" />
+                            <a href={device.download} target="_blank" rel="noopener noreferrer">
+                              <img src={device.image} alt={device.name} className="w-full h-auto rounded-lg"/>
+                            </a>
                           </CardContent>
                         </Card>
                     ))}
