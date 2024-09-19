@@ -63,7 +63,7 @@ export default function OnelotShowcaseRedesign() {
               <Link href="#about" className="hover:text-purple-400 transition-colors">About</Link>
               <Link href="#devices" className="hover:text-purple-400 transition-colors">Devices</Link>
               <Link href="#features" className="hover:text-purple-400 transition-colors">Features</Link>
-              <Link href="#download" className="hover:text-purple-400 transition-colors">Download</Link>
+              <Link href="/downloads" className="hover:text-purple-400 transition-colors">Download</Link>
             </nav>
             <Button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden">
               {menuOpen ? <X /> : <Menu />}
@@ -75,7 +75,7 @@ export default function OnelotShowcaseRedesign() {
                   <Link href="#about" className="hover:text-purple-400 transition-colors">About</Link>
                   <Link href="#devices" className="hover:text-purple-400 transition-colors">Devices</Link>
                   <Link href="#features" className="hover:text-purple-400 transition-colors">Features</Link>
-                  <Link href="#download" className="hover:text-purple-400 transition-colors">Download</Link>
+                  <Link href="/downloads" className="hover:text-purple-400 transition-colors">Download</Link>
                 </div>
               </nav>
           )}
@@ -100,21 +100,31 @@ export default function OnelotShowcaseRedesign() {
           </section>
 
           <section id="about" className="py-20 bg-black/30 backdrop-blur-lg">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">About Onelots</h2>
-              <p className="text-lg md:text-xl max-w-3xl mx-auto text-center">
-                Onelots is a dedicated maintainer for EvolutionX, committed to providing high-quality custom ROM builds for a variety of Android devices. With a focus on performance, stability, and cutting-edge features, we strive to enhance your mobile experience.
+            <div className="container mx-auto px-4 text-center">
+              <img
+                  src="https://github.com/oneloutre.png"
+                  alt="Profile"
+                  className="rounded-full w-32 h-32 mx-auto mb-6"
+              />
+              <h2 className="text-3xl md:text-4xl font-bold mb-8">About Onelots</h2>
+              <p className="text-lg md:text-xl max-w-3xl mx-auto">
+                Onelots is a dedicated maintainer for EvolutionX, committed to providing high-quality custom ROM builds
+                for a variety of Android devices. With a focus on performance, stability, and cutting-edge features, we
+                strive to enhance your mobile experience.
               </p>
             </div>
           </section>
+
 
           <section id="devices" className="py-20">
             <div className="container mx-auto px-4">
               <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Supported Devices</h2>
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-3xl mx-auto">
                 <TabsList className="grid w-full grid-cols-2 bg-black/30 backdrop-blur-lg rounded-full p-1 text-white">
-                  <TabsTrigger value="official" className="rounded-full data-[state=active]:bg-purple-600">Official</TabsTrigger>
-                  <TabsTrigger value="unofficial" className="rounded-full data-[state=active]:bg-purple-600">Unofficial</TabsTrigger>
+                  <TabsTrigger value="official"
+                               className="rounded-full data-[state=active]:bg-purple-600">Official</TabsTrigger>
+                  <TabsTrigger value="unofficial"
+                               className="rounded-full data-[state=active]:bg-purple-600">Unofficial</TabsTrigger>
                 </TabsList>
                 <TabsContent value="official" className="mt-8">
                   <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -209,11 +219,11 @@ export default function OnelotShowcaseRedesign() {
                     <Download className="mr-2 h-5 w-5"/> Download Now
                   </Button>
                 </a>
-                <a href="https://roms.onelots.fr" download>
+                <Link href="/downloads">
                   <Button className="bg-purple-600 hover:bg-purple-700 text-lg px-8 py-3">
-                    <Copy className="mr-2 h-5 w-5"/> Download Now (Mirror)
+                    <Copy className="mr-2 h-5 w-5" /> Download Now (Mirror)
                   </Button>
-                </a>
+                </Link>
               </div>
 
             </div>
