@@ -18,7 +18,7 @@ type SortOption = 'name' | 'type' | 'size'
 type SortDirection = 'asc' | 'desc'
 
 export default function EnhancedFileBrowserWithFolderSizes() {
-    const [currentPath, setCurrentPath] = useState<string[]>(['media'])
+    const [currentPath, setCurrentPath] = useState<string[]>(['EvolutionX'])
     const [currentContent, setCurrentContent] = useState<FileSystemItem[]>([])
     const [filteredContent, setFilteredContent] = useState<FileSystemItem[]>([])
     const [isLoading, setIsLoading] = useState(true)
