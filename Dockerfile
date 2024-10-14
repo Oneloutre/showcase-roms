@@ -1,6 +1,6 @@
 ARG NODE_VERSION=22
 FROM node:${NODE_VERSION}-alpine AS base
-WORKDIR /usr/src/app
+WORKDIR /app
 ENV NODE_ENV="production"
 FROM base AS build
 RUN apk -U add build-base gyp pkgconfig python3
