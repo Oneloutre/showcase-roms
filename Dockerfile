@@ -11,7 +11,7 @@ COPY --link . .
 RUN npm run build
 RUN npm prune --omit=dev
 FROM base AS run
-COPY --from=build /usr/src/app /app
+COPY --from=build /app /app
 EXPOSE 3000
 CMD [ "npm", "run", "start" ]
 
