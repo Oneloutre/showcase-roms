@@ -40,11 +40,11 @@ export default function OnelotShowcaseRedesign() {
 
   const devices = {
     official: [
-      { name: 'Xiaomi Mi Mix 2S', codename: 'polaris', image: 'https://raw.githubusercontent.com/Evolution-X/official_devices/refs/heads/udc/images/devices/polaris.png', download:'https://sourceforge.net/projects/evolution-x/files/polaris' },
-      { name: 'Google Pixel 3a', codename: 'sargo', image: 'https://raw.githubusercontent.com/Evolution-X/official_devices/refs/heads/udc/images/devices/sargo.png', download:'https://sourceforge.net/projects/evolution-x/files/sargo' },
-      { name: 'Google Pixel 3a XL', codename: 'bonito', image: 'https://raw.githubusercontent.com/Evolution-X/official_devices/refs/heads/udc/images/devices/bonito.png', download:'https://sourceforge.net/projects/evolution-x/files/bonito'},
-      { name: 'Google Pixel 3', codename: 'blueline', image: 'https://raw.githubusercontent.com/Evolution-X/official_devices/refs/heads/udc/images/devices/blueline.png', download: 'https://sourceforge.net/projects/evolution-x/files/blueline' },
-      { name: 'Google Pixel 3 XL', codename: 'crosshatch', image: 'https://raw.githubusercontent.com/Evolution-X/official_devices/refs/heads/udc/images/devices/crosshatch.png', download: 'https://sourceforge.net/projects/evolution-x/files/crosshatch' },
+      { name: 'Xiaomi Mi Mix 2S', codename: 'polaris', image: 'https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/devices/images/polaris.png', download:'https://sourceforge.net/projects/evolution-x/files/polaris' },
+      { name: 'Google Pixel 3a', codename: 'sargo', image: 'https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/devices/images/sargo.png', download:'https://sourceforge.net/projects/evolution-x/files/sargo' },
+      { name: 'Google Pixel 3a XL', codename: 'bonito', image: 'https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/devices/images/bonito.png', download:'https://sourceforge.net/projects/evolution-x/files/bonito'},
+      { name: 'Google Pixel 3', codename: 'blueline', image: 'https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/devices/images/blueline.png', download: 'https://sourceforge.net/projects/evolution-x/files/blueline' },
+      { name: 'Google Pixel 3 XL', codename: 'crosshatch', image: 'https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/devices/images/crosshatch.png', download: 'https://sourceforge.net/projects/evolution-x/files/crosshatch' },
     ],
     unofficial: [
       { name: 'Xiaomi Redmi 5 Plus', codename: 'vince', image: 'https://images.frandroid.com/wp-content/uploads/2019/04/xiaomi-redmi-5-plus-2018.png', download: 'https://roms.onelots.fr' },
