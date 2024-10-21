@@ -13,7 +13,6 @@ RUN npm prune --omit=dev
 FROM base AS run
 COPY --from=build /app /usr/src/app
 EXPOSE 3000
-WORKDIR /app
 CMD [ "npm", "run", "start" ]
 
 
