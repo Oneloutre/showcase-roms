@@ -1,0 +1,112 @@
+#file-explorer {
+    padding: 4rem 0;
+}
+
+.breadcrumb {
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+}
+
+.breadcrumb a {
+    color: hsl(var(--primary));
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: hsl(var(--accent));
+}
+
+.file-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: hsl(var(--card-foreground));
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.file-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.file-item i {
+    margin-right: 1.5rem;
+    font-size: 1.5rem;
+    min-width: 24px;
+}
+
+.file-item span {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 0.5rem;
+}
+
+.file-item.folder {
+    background-color: hsl(250, 70%, 20%);
+    color: hsl(0, 0%, 100%);
+}
+
+.file-item.folder:hover {
+    background-color: hsl(250, 70%, 25%);
+}
+
+.file-item.folder i {
+    color: hsl(45, 100%, 50%);
+}
+
+.file-item.file {
+    background-color: hsl(220, 70%, 20%);
+    color: hsl(0, 0%, 100%);
+}
+
+.file-item.file:hover {
+    background-color: hsl(220, 70%, 25%);
+}
+
+.file-item.file i {
+    color: hsl(190, 100%, 50%);
+}
+
+.file-item.parent {
+    background-color: hsl(var(--primary));
+    color: hsl(0, 0%, 100%);
+}
+
+.file-item.parent:hover {
+    background-color: hsl(var(--primary) / 0.8);
+}
+
+.file-item.parent i {
+    color: hsl(var(--primary-foreground));
+}
+
+.file-item[href$=".img"] i {
+    color: hsl(280, 100%, 50%);
+}
+
+.file-item[href$=".zip"] i {
+    color: hsl(120, 100%, 40%);
+}
+
+@media (max-width: 768px) {
+    .file-list {
+        grid-template-columns: 1fr;
+    }
+}

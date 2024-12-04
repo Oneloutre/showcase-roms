@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloads - EvolutionX Custom ROMs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='file-explorer.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+</head>
+<body class="dark">
+    <header id="main-header">
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">
+                    <i data-feather="smartphone"></i>
+                    <span>Onelots</span>
+                </a>
+                <ul>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/#devices">Devices</a></li>
+                    <li><a href="/#features">Features</a></li>
+                    <li><a href="/downloads">Download</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="file-explorer">
+            <div class="container">
+                <div class="directory-info">
+                    <p><strong>Total size of the mirror :</strong> {{ total_size }} Gb</p>
+                    <p><strong>Total size of the folder :</strong> {{ folder_size }} Gb </p>
+                </div>
+                <div class="breadcrumb">
+                    <a href="{{ url_for('downloads') }}">Root</a>
+                    {% for part in current_path.split('/') %}
+                        {% if part %}
+                            / <a href="{{ url_for('downloads', path='/'.join(current_path.split('/')[:loop.index])) }}">{{ part }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="file-list">
+                    {% if parent_path is not none %}
+                        <a href="{{ url_for('downloads', path=parent_path) }}" class="file-item parent">
+                            <i data-feather="arrow-left"></i>
+                            <span>Parent Directory</span>
+                        </a>
+                    {% endif %}
+                    {% for item in items %}
+    <a href="{{ url_for('downloads', path=item.path) }}" class="file-item {{ 'folder' if item.is_dir else 'file' }}">
+        {% if item.is_dir %}
+            <i data-feather="folder"></i>
+        {% elif item.name.endswith('.img') %}
+            <i data-feather="box"></i>
+        {% elif item.name.endswith('.zip') %}
+            <i data-feather="smartphone"></i>
+        {% else %}
+            <i data-feather="file"></i>
+        {% endif %}
+        <span>{{ item.name }}</span>
+    </a>
+{% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Onelots. All rights reserved. (Jk it is on github)</p>
+            <div class="social-links">
+                <a href="https://github.com/Oneloutre" target="_blank" rel="noopener noreferrer"><i data-feather="github"></i></a>
+                <a href="https://twitter.com/Onelots1" target="_blank" rel="noopener noreferrer"><i data-feather="twitter"></i></a>
+                <a href="https://t.me/onelots" target="_blank" rel="noopener noreferrer"><i data-feather="send"></i></a>
+                <a href="https://paypal.me/0nelots" target="_blank" rel="noopener noreferrer"><i data-feather="dollar-sign"></i></a>
+                <a href="https://discord.gg/evolution-x" target="_blank" rel="noopener noreferrer"><i data-feather="message-circle"></i></a>
+                <a href="mailto:onelots@onelots.fr" target="_blank" rel="noopener noreferrer"><i data-feather="mail"></i></a>
+                <a href="https://evox.onelots.fr/downloads" target="_blank" rel="noopener noreferrer"><i data-feather="copy"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>

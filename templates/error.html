@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - EvolutionX Custom ROMs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+</head>
+<body class="dark">
+    <header id="main-header">
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">
+                    <i data-feather="smartphone"></i>
+                    <span>Onelots</span>
+                </a>
+                <ul>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/#devices">Devices</a></li>
+                    <li><a href="/#features">Features</a></li>
+                    <li><a href="/downloads">Download</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="error">
+            <div class="container">
+                <h1>Error</h1>
+                <p>{{ error }}</p>
+                <a href="/" class="button primary">Return to Home</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Onelots. All rights reserved. (Jk it is on github)</p>
+            <div class="social-links">
+                <a href="https://github.com/Oneloutre" target="_blank" rel="noopener noreferrer"><i data-feather="github"></i></a>
+                <a href="https://twitter.com/Onelots1" target="_blank" rel="noopener noreferrer"><i data-feather="twitter"></i></a>
+                <a href="https://t.me/onelots" target="_blank" rel="noopener noreferrer"><i data-feather="send"></i></a>
+                <a href="https://paypal.me/0nelots" target="_blank" rel="noopener noreferrer"><i data-feather="dollar-sign"></i></a>
+                <a href="https://discord.gg/evolution-x" target="_blank" rel="noopener noreferrer"><i data-feather="message-circle"></i></a>
+                <a href="mailto:onelots@onelots.fr" target="_blank" rel="noopener noreferrer"><i data-feather="mail"></i></a>
+                <a href="https://evox.onelots.fr/downloads" target="_blank" rel="noopener noreferrer"><i data-feather="copy"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>

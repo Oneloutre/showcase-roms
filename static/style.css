@@ -1,0 +1,303 @@
+:root {
+    --background: 240 17% 5%;
+    --foreground: 240 10% 90%;
+    --card: 240 17% 8%;
+    --card-foreground: 240 10% 90%;
+    --popover: 240 17% 8%;
+    --popover-foreground: 240 10% 90%;
+    --primary: 250 80% 60%;
+    --primary-foreground: 240 10% 95%;
+    --secondary: 240 20% 20%;
+    --secondary-foreground: 240 10% 90%;
+    --muted: 240 20% 15%;
+    --muted-foreground: 240 10% 70%;
+    --accent: 20 80% 45%;
+    --accent-foreground: 240 10% 95%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 240 10% 95%;
+    --border: 240 20% 20%;
+    --input: 240 20% 20%;
+    --ring: 240 50% 70%;
+    --radius: 0.5rem;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header {
+    background-color: hsl(var(--card));
+    padding: 1rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+.header-transparent {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    color: hsl(var(--primary));
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo i {
+    margin-right: 0.5rem;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 1.5rem;
+}
+
+nav ul li a {
+    color: hsl(var(--primary));
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: hsl(var(--accent));
+}
+
+section {
+    padding: 4rem 0;
+}
+
+h1, h2, h3 {
+    margin-bottom: 1rem;
+}
+
+main {
+    padding-top: 80px;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: 2px solid hsl(var(--accent));
+}
+
+.button.primary {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+}
+
+.button.secondary {
+    background-color: transparent;
+    color: hsl(var(--accent));
+}
+
+.button:hover {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+}
+
+#hero {
+    text-align: center;
+    padding: 6rem 0;
+    background: linear-gradient(to right, hsl(270, 50%, 20%), hsl(240, 50%, 30%));
+    color: hsl(var(--foreground));
+}
+
+#hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+#hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#about {
+    text-align: center;
+    background-color: hsl(var(--card));
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 2rem;
+}
+
+#devices {
+    background-color: hsl(var(--background));
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.tab-button {
+    padding: 0.3rem 10rem;
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 15px;
+}
+
+
+.tab-button.active {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.device-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+    gap: 2rem;
+    justify-content: center;
+}
+
+
+.device-card {
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+    border: 2px solid hsl(var(--accent));
+    box-shadow: 0 0 10px hsla(var(--accent), 0.3);
+}
+
+.device-card:hover {
+    transform: translateY(-5px);
+}
+
+.device-card img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+}
+
+#features {
+    background-color: hsl(var(--card));
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    text-align: center;
+    padding: 2rem;
+    background-color: hsl(var(--background));
+    border-radius: var(--radius);
+}
+
+.feature-card i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: hsl(var(--accent));
+}
+
+#download {
+    text-align: center;
+    background: linear-gradient(to right, hsl(270, 50%, 20%), hsl(240, 50%, 30%));
+    color: hsl(var(--foreground));
+}
+
+.download-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+footer {
+    background-color: hsl(var(--card));
+    padding: 2rem 0;
+    text-align: center;
+    border-top: 2px solid hsl(var(--accent));
+}
+
+.social-links {
+    margin-top: 1rem;
+}
+
+.social-links a {
+    color: hsl(var(--accent));
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: hsl(var(--primary));
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        margin-top: 1rem;
+    }
+
+    nav ul li {
+        margin-left: 0;
+        margin-right: 1.5rem;
+    }
+}
