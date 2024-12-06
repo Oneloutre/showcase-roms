@@ -70,7 +70,7 @@ def downloads():
             folder_size = check_size(current_path)
             return render_template('downloads.html', items=items, current_path=path, parent_path=parent_path, total_size=total_size, folder_size=folder_size)
         else:
-            return send_file(current_path, as_attachment=True)
+            return send_file(current_path, as_attachment=True, mimetype="application/octet-stream")
     except PermissionError:
         abort(403)
 
