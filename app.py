@@ -74,6 +74,11 @@ def downloads():
     except PermissionError:
         abort(403)
 
+@app.route('/eta')
+def eta():
+    return render_template('eta.html')
+
+
 @app.errorhandler(403)
 def forbidden(e):
     return render_template('error.html', error="403 Forbidden: You don't have permission to access this resource."), 403
@@ -82,3 +87,5 @@ def forbidden(e):
 def not_found(e):
     return render_template('error.html', error="404 Not Found: The requested resource could not be found."), 404
 
+if __name__ == '__main__':
+    app.run(debug=True, port=8000)

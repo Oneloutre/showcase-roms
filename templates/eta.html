@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Onelot's personal EvoX mirror - ETA page">
+    <meta property="og:description" content="Know when your device will be released !">
+    <meta property="og:url" content="https://evox.onelots.fr/eta">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://github.com/oneloutre.png">
+    <meta property="og:image:width" content="460">
+    <meta property="og:image:height" content="460">
+    <title>NO ETA Will be provided !</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #ff9a9e, #fad0c4, #fbc2eb, #8fd3f4, #84fab0, #f6d365);
+            height: 100vh;
+            font-family: 'Comic Sans MS', sans-serif; /* Pour le chaos visuel */
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* NO ETA chaos */
+        .no-eta-chaos {
+            position: absolute;
+            font-weight: bold;
+            white-space: nowrap;
+            animation: chaos 5s infinite linear, spin 10s infinite ease-in-out;
+            transform-origin: center;
+        }
+
+        @keyframes chaos {
+            0% {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(0deg);
+                font-size: 20px;
+                color: hsl(0, 100%, 50%);
+            }
+            15% {
+                top: 10%;
+                left: 80%;
+                transform: translate(-50%, -50%) rotate(90deg);
+                font-size: 80px;
+                color: hsl(90, 100%, 50%);
+            }
+            30% {
+                top: 80%;
+                left: 10%;
+                transform: translate(-50%, -50%) rotate(-45deg);
+                font-size: 200px;
+                color: hsl(180, 100%, 50%);
+            }
+            45% {
+                top: 20%;
+                left: 10%; /* Ajout pour équilibrer le chaos à gauche */
+                transform: translate(-50%, -50%) rotate(180deg);
+                font-size: 40px;
+                color: hsl(270, 100%, 50%);
+            }
+            60% {
+                top: 70%;
+                left: 90%;
+                transform: translate(-50%, -50%) rotate(-90deg);
+                font-size: 120px;
+                color: hsl(360, 100%, 50%);
+            }
+            75% {
+                top: 40%;
+                left: 30%; /* Ajout pour équilibrer à gauche */
+                transform: translate(-50%, -50%) rotate(270deg);
+                font-size: 60px;
+                color: hsl(45, 100%, 50%);
+            }
+            100% {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(0deg);
+                font-size: 20px;
+                color: hsl(0, 100%, 50%);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                transform: rotate(180deg) scale(1.2);
+            }
+            50% {
+                transform: rotate(360deg) scale(0.8);
+            }
+            75% {
+                transform: rotate(540deg) scale(1.5);
+            }
+            100% {
+                transform: rotate(720deg) scale(1);
+            }
+        }
+
+        /* NO ETA DVD bounce */
+        .no-eta-dvd {
+            position: absolute;
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            animation: dvd-bounce 3s infinite linear;
+        }
+
+        @keyframes dvd-bounce {
+            0% {
+                top: 0;
+                left: 0;
+                color: hsl(0, 100%, 50%);
+            }
+            25% {
+                top: 0;
+                left: 90%;
+                color: hsl(90, 100%, 50%);
+            }
+            50% {
+                top: 90%;
+                left: 90%;
+                color: hsl(180, 100%, 50%);
+            }
+            75% {
+                top: 90%;
+                left: 0;
+                color: hsl(270, 100%, 50%);
+            }
+            100% {
+                top: 0;
+                left: 0;
+                color: hsl(360, 100%, 50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Multiples "NO ETA" pour chaos -->
+        <div class="no-eta-chaos" style="animation-delay: 0s;">NO ETA</div>
+        <div class="no-eta-chaos" style="animation-delay: 1s;">NO ETA</div>
+        <div class="no-eta-chaos" style="animation-delay: 2s;">NO ETA</div>
+        <div class="no-eta-chaos" style="animation-delay: 3s;">NO ETA</div>
+        <div class="no-eta-chaos" style="animation-delay: 4s;">NO ETA</div>
+
+        <!-- NO ETA DVD Bounce -->
+        <div class="no-eta-dvd" style="animation-delay: 0s;">NO ETA</div>
+        <div class="no-eta-dvd" style="animation-delay: 0.5s;">NO ETA</div>
+        <div class="no-eta-dvd" style="animation-delay: 1s;">NO ETA</div>
+    </div>
+</body>
+</html>
