@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, abort, send_file
 import os
+import cloudscraper
+from bs4 import BeautifulSoup
 
 DOWNLOAD_DIR = ('test')
 
@@ -77,6 +79,35 @@ def downloads():
 @app.route('/eta')
 def eta():
     return render_template('eta.html')
+
+
+@app.route('/when')
+def when():
+    scraper = cloudscraper.create_scraper()
+
+    url = 'https://hel-eu-1.ci.evolution-x.org/'
+
+    response = scraper.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    table = soup.find('div', {'id': 'view-message'}).find('table')
+
+    head = table.find('thead')
+    days = []
+    devices = []
+    for th in head.find_all('th'):
+        days.append(th.text)
+
+    for tr in table.find('tbody').find_all('tr'):
+        device = {}
+        for i, td in enumerate(tr.find_all('td')):
+            if i == 0:
+                device['hour'] = td.text
+            else:
+                device[days[i]] = td.text
+        devices.append(device)
+    return render_template('when.html', devices=devices)
+
 
 
 @app.errorhandler(403)

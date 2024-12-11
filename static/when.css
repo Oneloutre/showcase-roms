@@ -1,0 +1,47 @@
+
+:root {
+    --accent-foreground: 240 10% 95%;
+}
+
+.schedule {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.schedule th,
+.schedule td {
+    border: 1px solid hsl(var(--border));
+    padding: 0.75rem;
+}
+
+.schedule th {
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+    text-align: center;
+}
+
+.schedule tr:nth-child(even) {
+    background-color: hsl(var(--muted)); /* Couleur des lignes paires */
+}
+
+.schedule tr:hover {
+    background-color: inherit; /* Garde la couleur d'origine */
+    color: inherit; /* Garde la couleur du texte d'origine */
+}
+
+.schedule td {
+    text-align: center;
+}
+
+h1 {
+    color: hsl(var(--primary));
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.container {
+    padding: 1rem;
+}
