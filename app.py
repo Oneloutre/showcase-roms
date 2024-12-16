@@ -9,10 +9,10 @@ app = Flask(__name__)
 
 official_devices = {
     "Xiaomi Mi Mix 2S": {"codename": "polaris", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/devices/images/polaris.png", "download": "https://sourceforge.net/projects/evolution-x/files/polaris"},
-    "Google Pixel 3a": {"codename": "sargo", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/devices/images/sargo.png", "download": "https://sourceforge.net/projects/evolution-x/files/sargo"},
-    "Google Pixel 3a XL": {"codename": "bonito", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/devices/images/bonito.png", "download": "https://sourceforge.net/projects/evolution-x/files/bonito"},
-    "Google Pixel 3": {"codename": "blueline", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/devices/images/blueline.png", "download": "https://sourceforge.net/projects/evolution-x/files/blueline"},
-    "Google Pixel 3 XL": {"codename": "crosshatch", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/udc/devices/images/crosshatch.png", "download": "https://sourceforge.net/projects/evolution-x/files/crosshatch"},
+    "Google Pixel 3a": {"codename": "sargo", "image": "https://github.com/Evolution-X/www_gitres/blob/main/devices/images/sargo.png", "download": "https://sourceforge.net/projects/evolution-x/files/sargo"},
+    "Google Pixel 3a XL": {"codename": "bonito", "image": "https://github.com/Evolution-X/www_gitres/blob/main/devices/images/bonito.png", "download": "https://sourceforge.net/projects/evolution-x/files/bonito"},
+    "Google Pixel 3": {"codename": "blueline", "image": "https://github.com/Evolution-X/www_gitres/blob/main/devices/images/blueline.png", "download": "https://sourceforge.net/projects/evolution-x/files/blueline"},
+    "Google Pixel 3 XL": {"codename": "crosshatch", "image": "https://github.com/Evolution-X/www_gitres/blob/main/devices/images/crosshatch.png", "download": "https://sourceforge.net/projects/evolution-x/files/crosshatch"},
 }
 
 unofficial_devices = {
