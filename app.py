@@ -16,8 +16,10 @@ official_devices = {
 }
 
 unofficial_devices = {
-    "Xiaomi Redmi 5 Plus\n(Under work.)": {"codename": "vince", "image": "https://images.frandroid.com/wp-content/uploads/2019/04/xiaomi-redmi-5-plus-2018.png", "download": "https://evox.onelots.fr/downloads"},
-    "Oneplus Nord N10 5G\n(Under work.)": {"codename": "billie", "image": "https://oasis.opstatics.com/content/dam/oasis/page/billie/N10-Frame11.png", "download": "https://evox.onelots.fr/download"},
+    "Xiaomi Redmi 5 Plus\n(Work in progress.)": {"codename": "vince", "image": "https://images.frandroid.com/wp-content/uploads/2019/04/xiaomi-redmi-5-plus-2018.png", "download": "https://evox.onelots.fr/downloads"},
+    "Oneplus Nord N10 5G\n(Work in progress.)": {"codename": "billie", "image": "https://oasis.opstatics.com/content/dam/oasis/page/billie/N10-Frame11.png", "download": "https://evox.onelots.fr/download"},
+    "Oneplus 5\n(Work in progress.)": {"codename": "cheeseburger", "image": "https://cdn.opstatics.com/store/20170907/assets/images/support/support-list/model-specs-list/details/5-black.png", "download": "https://evox.onelots.fr/download"},
+    "Oneplus 7T\n(Work in progress.)": {"codename": "hotdogb", "image": "https://cdn.revendo.com/media/86/84/34/1662392047/oneplus-7t-glacier-blue-guenstig-gebraucht-kaufen.png.png", "download": "https://evox.onelots.fr/download"},
 }
 
 @app.route('/')
