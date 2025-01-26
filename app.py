@@ -13,13 +13,16 @@ official_devices = {
     "Google Pixel 3a XL": {"codename": "bonito", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/images/bonito.png", "download": "https://sourceforge.net/projects/evolution-x/files/bonito"},
     "Google Pixel 3": {"codename": "blueline", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/images/blueline.png", "download": "https://sourceforge.net/projects/evolution-x/files/blueline"},
     "Google Pixel 3 XL": {"codename": "crosshatch", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/images/crosshatch.png", "download": "https://sourceforge.net/projects/evolution-x/files/crosshatch"},
+    "Xiaomi Redmi 5 Plus": {"codename": "vince", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/images/vince.png", "download": "https://sourceforge.net/projects/evolution-x/files/vince"},
 }
 
 unofficial_devices = {
-    "Xiaomi Redmi 5 Plus\n(Work in progress.)": {"codename": "vince", "image": "https://images.frandroid.com/wp-content/uploads/2019/04/xiaomi-redmi-5-plus-2018.png", "download": "https://evox.onelots.fr/downloads"},
     "Oneplus Nord N10 5G\n(Work in progress.)": {"codename": "billie", "image": "https://oasis.opstatics.com/content/dam/oasis/page/billie/N10-Frame11.png", "download": "https://evox.onelots.fr/download"},
     "Oneplus 5\n(Work in progress.)": {"codename": "cheeseburger", "image": "https://cdn.opstatics.com/store/20170907/assets/images/support/support-list/model-specs-list/details/5-black.png", "download": "https://evox.onelots.fr/download"},
+    "Oneplus 5T\n(Work in progress.)": {"codename": "dumpling", "image": "https://cdn.opstatics.com/store/20170907/assets/images/support/support-list/model-specs-list/details/5-black.png", "download": "https://evox.onelots.fr/download"},
     "Oneplus 7T\n(Work in progress.)": {"codename": "hotdogb", "image": "https://cdn.revendo.com/media/86/84/34/1662392047/oneplus-7t-glacier-blue-guenstig-gebraucht-kaufen.png.png", "download": "https://evox.onelots.fr/download"},
+    "Oneplus 7T Pro\n(Work in progress.)": {"codename": "hotdog", "image": "https://www.gizmochina.com/wp-content/uploads/2019/09/oneplus_7t_pro_1_3.png", "download": "https://evox.onelots.fr/download"},
+    "Xiaomi Mi A3\n(Work in progress.)": {"codename": "laurel_sprout", "image": "https://i01.appmifile.com/webfile/globalimg/T/20190718094400.png", "download": "https://evox.onelots.fr/download"},
 }
 
 @app.route('/')
