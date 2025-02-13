@@ -14,12 +14,12 @@ official_devices = {
     "Google Pixel 3": {"codename": "blueline", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/images/blueline.png", "download": "https://sourceforge.net/projects/evolution-x/files/blueline"},
     "Google Pixel 3 XL": {"codename": "crosshatch", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/images/crosshatch.png", "download": "https://sourceforge.net/projects/evolution-x/files/crosshatch"},
     "Xiaomi Redmi 5 Plus": {"codename": "vince", "image": "https://raw.githubusercontent.com/Evolution-X/www_gitres/refs/heads/main/devices/images/vince.png", "download": "https://sourceforge.net/projects/evolution-x/files/vince"},
-"Oneplus 5\n(Work in progress.)": {"codename": "cheeseburger", "image": "https://cdn.opstatics.com/store/20170907/assets/images/support/support-list/model-specs-list/details/5-black.png", "download": "https://evox.onelots.fr/download"},
-    "Oneplus 5T\n(Work in progress.)": {"codename": "dumpling", "image": "https://cdn.opstatics.com/store/20170907/assets/images/support/support-list/model-specs-list/details/5-black.png", "download": "https://evox.onelots.fr/download"},
-    "Oneplus 7 \n(Work in progress.)": {"codename": "guacamoleb","image": "https://media2.gsm55.com/media/device/4447/4447.png", "download": "https://evox.onelots.fr/download"},
-    "Oneplus 7 Pro\n(Work in progress.)": {"codename": "guacamole", "image": "https://cdn.revendo.com/media/08/63/34/1662390983/oneplus-7-pro-nebula-blue-guenstig-gebraucht-kaufen.png.png", "download": "https://evox.onelots.fr/download"},
-    "Oneplus 7T\n(Work in progress.)": {"codename": "hotdogb", "image": "https://cdn.revendo.com/media/86/84/34/1662392047/oneplus-7t-glacier-blue-guenstig-gebraucht-kaufen.png.png", "download": "https://evox.onelots.fr/download"},
-    "Oneplus 7T Pro\n(Work in progress.)": {"codename": "hotdog", "image": "https://www.gizmochina.com/wp-content/uploads/2019/09/oneplus_7t_pro_1_3.png", "download": "https://evox.onelots.fr/download"}
+    "Oneplus 5": {"codename": "cheeseburger", "image": "https://cdn.opstatics.com/store/20170907/assets/images/support/support-list/model-specs-list/details/5-black.png", "download": "https://evox.onelots.fr/download"},
+    "Oneplus 5T": {"codename": "dumpling", "image": "https://cdn.opstatics.com/store/20170907/assets/images/support/support-list/model-specs-list/details/5-black.png", "download": "https://evox.onelots.fr/download"},
+    "Oneplus 7": {"codename": "guacamoleb","image": "https://media2.gsm55.com/media/device/4447/4447.png", "download": "https://evox.onelots.fr/download"},
+    "Oneplus 7 Pro": {"codename": "guacamole", "image": "https://cdn.revendo.com/media/08/63/34/1662390983/oneplus-7-pro-nebula-blue-guenstig-gebraucht-kaufen.png.png", "download": "https://evox.onelots.fr/download"},
+    "Oneplus 7T": {"codename": "hotdogb", "image": "https://cdn.revendo.com/media/86/84/34/1662392047/oneplus-7t-glacier-blue-guenstig-gebraucht-kaufen.png.png", "download": "https://evox.onelots.fr/download"},
+    "Oneplus 7T Pro": {"codename": "hotdog", "image": "https://www.gizmochina.com/wp-content/uploads/2019/09/oneplus_7t_pro_1_3.png", "download": "https://evox.onelots.fr/download"}
 }
 
 unofficial_devices = {
