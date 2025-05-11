@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Downloads - EvolutionX Custom ROMs</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='file-explorer.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <meta property="og:title" content="Onelot's personal EvoX mirror - Download page">
     <meta property="og:description" content="Download EvolutionX for your device, maintained by Onelots, and experience Android like never before.">
-    <meta property="og:url" content="https://evox.onelots.fr">
+    <meta property="og:url" content="https://evox.onelots.fr/downloads">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://github.com/oneloutre.png">
     <meta property="og:image:width" content="460">
     <meta property="og:image:height" content="460">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body class="dark">
     <header id="main-header">
@@ -22,34 +26,64 @@
             <nav>
                 <a href="/" class="logo">
                     <i data-feather="smartphone"></i>
-                    <span> Onelots</span>
+                    <span>Onelots</span>
                 </a>
-                <ul>
-                    <li><a href="/#about">💡About</a></li>
-                    <li><a href="/#devices">📱Devices</a></li>
-                    <li><a href="/#features">✨Features</a></li>
-                    <li><a href="/downloads">💾Download</a></li>
-                    <li><a href="/testers">⚠️Testers page</a></li>
+                <ul class="desktop-menu">
+                    <li><a href="/#about">💡 About</a></li>
+                    <li><a href="/#devices">📱 Devices</a></li>
+                    <li><a href="/#features">✨ Features</a></li>
+                    <li><a href="{{ url_for('downloads') }}">💾 Download</a></li>
+                    <li><a href="{{ url_for('testers') }}">⚠️ Testers page</a></li>
                 </ul>
+                <button class="mobile-menu-button" aria-label="Menu">
+                    <i data-feather="menu"></i>
+                </button>
             </nav>
         </div>
     </header>
 
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <button class="mobile-menu-close" aria-label="Close menu">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        <ul>
+            <li><a href="/#about">💡 About</a></li>
+            <li><a href="/#devices">📱 Devices</a></li>
+            <li><a href="/#features">✨ Features</a></li>
+            <li><a href="{{ url_for('downloads') }}">💾 Download</a></li>
+            <li><a href="{{ url_for('testers') }}">⚠️ Testers page</a></li>
+        </ul>
+    </div>
+
     <main>
-        <section id="file-explorer">
+        <section class="page-section">
             <div class="container">
-                <div class="directory-info">
-                    <p><strong>Total size of the mirror :</strong> {{ total_size }} Gb</p>
-                    <p><strong>Total size of the folder :</strong> {{ folder_size }} Gb </p>
+                <h1 class="page-title">Downloads</h1>
+
+                <div class="info-card">
+                    <div class="info-grid">
+                        <p><strong>Total size of the mirror:</strong> {{ total_size }}</p>
+                        <p><strong>Total size of the folder:</strong> {{ folder_size }}</p>
+                    </div>
                 </div>
+
                 <div class="breadcrumb">
-                    <a href="{{ url_for('downloads') }}">Root</a>
-                    {% for part in current_path.split('/') %}
-                        {% if part %}
-                            / <a href="{{ url_for('downloads', path='/'.join(current_path.split('/')[:loop.index])) }}">{{ part }}</a>
-                        {% endif %}
-                    {% endfor %}
+                    <a href="{{ url_for('downloads') }}" class="breadcrumb-item">Root</a>
+                    {% if current_path %}
+                        {% set path_parts = current_path.split('/') %}
+                        {% set current = '' %}
+                        {% for part in path_parts %}
+                            {% if part %}
+                                {% set current = current + '/' + part if current else part %}
+                                <span class="breadcrumb-separator">/</span>
+                                <a href="{{ url_for('downloads', path=current) }}" class="breadcrumb-item">{{ part }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
+
                 <div class="file-list">
                     {% if parent_path is not none %}
                         <a href="{{ url_for('downloads', path=parent_path) }}" class="file-item parent">
@@ -57,21 +91,29 @@
                             <span>Parent Directory</span>
                         </a>
                     {% endif %}
+
                     {% for item in items %}
-    <a href="{{ url_for('downloads', path=item.path) }}" class="file-item {{ 'folder' if item.is_dir else 'file' }}">
-        {% if item.is_dir %}
-            <i data-feather="folder"></i>
-        {% elif item.name.endswith('.img') %}
-            <i data-feather="box"></i>
-        {% elif item.name.endswith('.zip') %}
-            <i data-feather="smartphone"></i>
-        {% else %}
-            <i data-feather="file"></i>
-        {% endif %}
-        <span>{{ item.name }}</span>
-    </a>
-{% endfor %}
+                        <a href="{{ url_for('downloads', path=item.path) }}" class="file-item {{ 'folder' if item.is_dir else 'file' }}">
+                            {% if item.is_dir %}
+                                <i data-feather="folder"></i>
+                            {% elif item.name.endswith('.img') %}
+                                <i data-feather="box"></i>
+                            {% elif item.name.endswith('.zip') %}
+                                <i data-feather="smartphone"></i>
+                            {% else %}
+                                <i data-feather="file"></i>
+                            {% endif %}
+                            <span>{{ item.name }}</span>
+                        </a>
+                    {% endfor %}
                 </div>
+
+                {% if not items %}
+                    <div class="empty-state">
+                        <i data-feather="folder-minus" class="empty-icon"></i>
+                        <p>This folder is empty</p>
+                    </div>
+                {% endif %}
             </div>
         </section>
     </main>
@@ -80,19 +122,60 @@
         <div class="container">
             <p>&copy; 2024 Onelots. All rights reserved. (Jk it is on github)</p>
             <div class="social-links">
-                <a href="https://github.com/Oneloutre" target="_blank" rel="noopener noreferrer"><i data-feather="github"></i></a>
-                <a href="https://twitter.com/Onelots1" target="_blank" rel="noopener noreferrer"><i data-feather="twitter"></i></a>
-                <a href="https://t.me/onelots" target="_blank" rel="noopener noreferrer"><i data-feather="send"></i></a>
-                <a href="https://paypal.me/0nelots" target="_blank" rel="noopener noreferrer"><i data-feather="dollar-sign"></i></a>
-                <a href="https://discord.gg/evolution-x" target="_blank" rel="noopener noreferrer"><i data-feather="message-circle"></i></a>
-                <a href="mailto:onelots@onelots.fr" target="_blank" rel="noopener noreferrer"><i data-feather="mail"></i></a>
-                <a href="https://evox.onelots.fr/downloads" target="_blank" rel="noopener noreferrer"><i data-feather="copy"></i></a>
+                <a href="https://github.com/Oneloutre" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <i data-feather="github"></i>
+                </a>
+                <a href="https://twitter.com/Onelots1" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <i data-feather="twitter"></i>
+                </a>
+                <a href="https://t.me/onelots" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                    <i data-feather="send"></i>
+                </a>
+                <a href="https://paypal.me/0nelots" target="_blank" rel="noopener noreferrer" aria-label="PayPal">
+                    <i data-feather="dollar-sign"></i>
+                </a>
+                <a href="https://discord.gg/evolution-x" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+                    <i data-feather="message-circle"></i>
+                </a>
+                <a href="mailto:onelots@onelots.fr" target="_blank" rel="noopener noreferrer" aria-label="Email">
+                    <i data-feather="mail"></i>
+                </a>
+                <a href="{{ url_for('downloads') }}" aria-label="Downloads">
+                    <i data-feather="copy"></i>
+                </a>
             </div>
         </div>
     </footer>
 
     <script>
+        // Initialize Feather icons
         feather.replace();
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('main-header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
     </script>
 </body>
 </html>

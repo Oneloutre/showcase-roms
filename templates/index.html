@@ -5,37 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EvolutionX Custom ROMs</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <meta property="og:title" content="Onelot's personal EvoX mirror">
     <meta property="og:description" content="Download EvolutionX for your device, maintained by Onelots, and experience Android like never before.">
     <meta property="og:url" content="https://evox.onelots.fr">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://github.com/oneloutre.png">
+    <meta property="og:image" content="https://github.com/onelots.png">
     <meta property="og:image:width" content="460">
     <meta property="og:image:height" content="460">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body class="dark">
     <header id="main-header">
         <div class="container">
             <nav>
-                <a href="#" class="logo">
+                <a href="/" class="logo">
                     <i data-feather="smartphone"></i>
                     <span>Onelots</span>
                 </a>
-                <ul>
-                    <li><a href="#about">💡About</a></li>
-                    <li><a href="#devices">📱Devices</a></li>
-                    <li><a href="#features">✨Features</a></li>
-                    <li><a href="/downloads">💾Download</a></li>
-                    <li><a href="/testers">⚠️Testers page</a></li>
-                 </ul>
+                <ul class="desktop-menu">
+                    <li><a href="#about">💡 About</a></li>
+                    <li><a href="#devices">📱 Devices</a></li>
+                    <li><a href="#features">✨ Features</a></li>
+                    <li><a href="{{ url_for('downloads') }}">💾 Download</a></li>
+                    <li><a href="{{ url_for('testers') }}">⚠️ Testers page</a></li>
+                </ul>
+                <button class="mobile-menu-button" aria-label="Menu">
+                    <i data-feather="menu"></i>
+                </button>
             </nav>
         </div>
     </header>
 
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <button class="mobile-menu-close" aria-label="Close menu">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+        <ul>
+            <li><a href="#about">💡 About</a></li>
+            <li><a href="#devices">📱 Devices</a></li>
+            <li><a href="#features">✨ Features</a></li>
+            <li><a href="{{ url_for('downloads') }}">💾 Download</a></li>
+            <li><a href="{{ url_for('testers') }}">⚠️ Testers page</a></li>
+        </ul>
+    </div>
+
     <main>
-        <section id="hero">
+        <section id="hero" class="hero-section">
             <div class="container">
                 <h1>Welcome to Onelots builds</h1>
                 <p>Official maintainer for EvolutionX, bringing you the best custom ROM experience.</p>
@@ -44,79 +67,115 @@
                     <a href="https://wiki.evolution-x.org" class="button secondary">Learn More</a>
                 </div>
             </div>
+            <div class="hero-gradient"></div>
         </section>
 
-        <section id="about">
+        <section id="about" class="about-section">
             <div class="container">
-                <img src="https://github.com/oneloutre.png" alt="Profile" class="profile-image">
-                <h2>About Onelots</h2>
-                <p>
-  👋             <strong>Hi! I'm Onelots</strong>, Project Member and Maintainer at <em>EvolutionX</em>. 🚀<br>
-                    I'm passionate about <strong>Docker</strong> 🐳, maintaining <strong>custom ROMs</strong> for Android 📱, and <strong>web scraping</strong> 🔍. My goal is to deliver high-quality builds
-                    that combine performance, stability, and cutting-edge features. ✨<br>
-                    My mission? Enhancing your mobile experience while sharing my love for modern technologies. 💻🔥<br>
-                    Welcome to EvolutionX!
-                </p>
-
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2 class="about-title">About Onelots</h2>
+                        <p class="about-intro">
+                            <span class="greeting">👋 Hi! I'm Onelots</span>, 
+                            <span class="role">Project Member and Maintainer at <em class="highlight">EvolutionX</em></span>. 
+                            <span class="emoji">🚀</span>
+                        </p>
+                        <div class="about-details">
+                            <p>
+                                I'm passionate about <span class="keyword">Docker</span> <span class="emoji">🐳</span>, 
+                                maintaining <span class="keyword">custom ROMs</span> for Android <span class="emoji">📱</span>, 
+                                and <span class="keyword">web scraping</span> <span class="emoji">🔍</span>.
+                            </p>
+                            <p>
+                                My goal is to deliver high-quality builds that combine 
+                                <span class="quality">performance</span>, 
+                                <span class="quality">stability</span>, and 
+                                <span class="quality">cutting-edge features</span>. 
+                                <span class="emoji">✨</span>
+                            </p>
+                            <p class="mission">
+                                My mission? Enhancing your mobile experience while sharing my love for modern technologies. 
+                                <span class="emoji">💻🔥</span>
+                            </p>
+                            <p class="welcome">
+                                Welcome to EvolutionX!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://github.com/onelots.png" alt="Onelots Profile" class="profile-image">
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="devices">
+        <section id="devices" class="devices-section">
             <div class="container">
-                <center>
-                    <h2>Supported Devices</h2>
-                </center>
+                <h2 class="section-title">Supported Devices</h2>
+                
                 <div class="tabs">
-                    <button class="tab-button active" data-tab="official">Official</button>
-                    <button class="tab-button" data-tab="unofficial">Under Work</button>
-                </div>
-                <div class="tab-content active" id="official-devices">
-                    <div class="device-grid">
-                        {% for name, device in official_devices.items() %}
-                        <div class="device-card">
-                            <h3>{{ name }}</h3>
-                            <p>{{ device.codename }}</p>
-                            <a href="{{ device.download }}" target="_blank" rel="noopener noreferrer">
-                                <img src="{{ device.image }}" alt="{{ name }}">
-                            </a>
-                        </div>
-                        {% endfor %}
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="official">Official</button>
+                        <button class="tab-button" data-tab="unofficial">Under Work</button>
                     </div>
-                </div>
-                <div class="tab-content" id="unofficial-devices">
-                    <div class="device-grid unofficial-grid">
-                        {% for name, device in unofficial_devices.items() %}
-                        <div class="device-card unofficial-card">
-                            <h3>{{ name }}</h3>
-                            <p>{{ device.codename }}</p>
-                            <a href="{{ device.download }}" target="_blank" rel="noopener noreferrer">
-                                <img src="{{ device.image }}" alt="{{ name }}">
-                            </a>
+                    
+                    <div class="tab-content active" id="official-devices">
+                        <div class="device-grid">
+                            {% for device_name, device in official_devices.items() %}
+                            <div class="device-card">
+                                <a href="{{ device.download }}">
+                                    <img src="{{ device.image }}" alt="{{ device_name }}" loading="lazy">
+                                    <div class="device-info">
+                                        <h3>{{ device_name }}</h3>
+                                        <p>{{ device.codename }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
+                    </div>
+                    
+                    <div class="tab-content" id="unofficial-devices">
+                        <div class="device-grid">
+                            {% for device_name, device in unofficial_devices.items() %}
+                            <div class="device-card unofficial">
+                                <a href="{{ device.download }}">
+                                    <img src="{{ device.image }}" alt="{{ device_name }}" loading="lazy">
+                                    <div class="device-info">
+                                        <h3>{{ device_name }}</h3>
+                                        <p>{{ device.codename }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="features">
+        <section id="features" class="features-section">
             <div class="container">
-                <center>
-                    <h2>EvolutionX Features</h2>
-                </center>
+                <h2 class="section-title">EvolutionX Features</h2>
                 <div class="feature-grid">
                     <div class="feature-card">
-                        <i data-feather="cpu"></i>
+                        <div class="feature-icon">
+                            <i data-feather="cpu"></i>
+                        </div>
                         <h3>Performance Optimizations</h3>
                         <p>Enjoy smoother performance and better battery life with custom kernel tweaks.</p>
                     </div>
                     <div class="feature-card">
-                        <i data-feather="smartphone"></i>
+                        <div class="feature-icon">
+                            <i data-feather="smartphone"></i>
+                        </div>
                         <h3>Customization Options</h3>
                         <p>Personalize your device with a wide range of customization features and themes.</p>
                     </div>
                     <div class="feature-card">
-                        <i data-feather="zap"></i>
+                        <div class="feature-icon">
+                            <i data-feather="zap"></i>
+                        </div>
                         <h3>Regular Updates</h3>
                         <p>Stay up-to-date with the latest Android security patches and feature updates.</p>
                     </div>
@@ -124,17 +183,19 @@
             </div>
         </section>
 
-        <section id="download">
+        <section id="download" class="download-section">
             <div class="container">
-                <h2>Ready to Evolve?</h2>
-                <p>Download EvolutionX for your device, maintained by Onelots, and experience Android like never before.</p>
-                <div class="download-buttons">
-                    <a href="https://sourceforge.net/projects/evolution-x/files/" class="button primary">
-                        <i data-feather="download"></i> Download Now
-                    </a>
-                    <a href="https://evox.onelots.fr/downloads" class="button secondary">
-                        <i data-feather="copy"></i> Download Now (Mirror)
-                    </a>
+                <div class="download-card">
+                    <h2>Ready to Evolve?</h2>
+                    <p>Download EvolutionX for your device, maintained by Onelots, and experience Android like never before.</p>
+                    <div class="download-buttons">
+                        <a href="https://sourceforge.net/projects/evolution-x/files/" class="button primary">
+                            <i data-feather="download"></i> Download Now
+                        </a>
+                        <a href="{{ url_for('downloads') }}" class="button secondary">
+                            <i data-feather="copy"></i> Download Now (Mirror)
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -144,51 +205,99 @@
         <div class="container">
             <p>&copy; 2024 Onelots. All rights reserved. (Jk it is on github)</p>
             <div class="social-links">
-                <a href="https://github.com/Oneloutre" target="_blank" rel="noopener noreferrer"><i data-feather="github"></i></a>
-                <a href="https://twitter.com/Onelots1" target="_blank" rel="noopener noreferrer"><i data-feather="twitter"></i></a>
-                <a href="https://t.me/onelots" target="_blank" rel="noopener noreferrer"><i data-feather="send"></i></a>
-                <a href="https://paypal.me/0nelots" target="_blank" rel="noopener noreferrer"><i data-feather="dollar-sign"></i></a>
-                <a href="https://discord.gg/evolution-x" target="_blank" rel="noopener noreferrer"><i data-feather="message-circle"></i></a>
-                <a href="mailto:onelots@onelots.fr" target="_blank" rel="noopener noreferrer"><i data-feather="mail"></i></a>
-                <a href="https://evox.onelots.fr/downloads" target="_blank" rel="noopener noreferrer"><i data-feather="copy"></i></a>
+                <a href="https://github.com/Onelots" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <i data-feather="github"></i>
+                </a>
+                <a href="https://twitter.com/0nelots" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <i data-feather="twitter"></i>
+                </a>
+                <a href="https://t.me/onelots" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                    <i data-feather="send"></i>
+                </a>
+                <a href="https://paypal.me/0nelots" target="_blank" rel="noopener noreferrer" aria-label="PayPal">
+                    <i data-feather="dollar-sign"></i>
+                </a>
+                <a href="https://discord.gg/evolution-x" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+                    <i data-feather="message-circle"></i>
+                </a>
+                <a href="mailto:onelots@onelots.fr" target="_blank" rel="noopener noreferrer" aria-label="Email">
+                    <i data-feather="mail"></i>
+                </a>
+                <a href="/downloads" aria-label="Downloads">
+                    <i data-feather="copy"></i>
+                </a>
             </div>
         </div>
     </footer>
 
     <script>
+        // Initialize Feather icons
         feather.replace();
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenu = document.querySelector('.mobile-menu');
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
 
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
 
-                    tab.classList.add('active');
-                    document.getElementById(`${tabId}-devices`).classList.add('active');
-                });
+        // Tabs functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to current button and content
+                button.classList.add('active');
+                document.getElementById(`${tabId}-devices`).classList.add('active');
             });
+        });
 
-            const header = document.getElementById('main-header');
-            let lastScrollTop = 0;
+        // Header scroll effect
+        const header = document.getElementById('main-header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
 
-            window.addEventListener('scroll', () => {
-                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                if (scrollTop > lastScrollTop) {
-                    header.classList.add('header-transparent');
-                } else {
-                    header.classList.remove('header-transparent');
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
                 }
-                lastScrollTop = scrollTop;
             });
         });
     </script>
 </body>
 </html>
-</body>
-</html> |
