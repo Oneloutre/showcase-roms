@@ -76,7 +76,6 @@
     </div>
 
     <script>
-        // Create floating "NO ETA" elements
         const container = document.querySelector('.eta-container');
         const numElements = 20;
 
@@ -85,11 +84,9 @@
             element.className = 'floating-eta';
             element.textContent = 'NO ETA';
             
-            // Random size
             const size = 1 + Math.random() * 3;
             element.style.fontSize = `${size}rem`;
             
-            // Random position variables
             const startX = `${Math.random() * 100}vw`;
             const startY = `${Math.random() * 100}vh`;
             const midX = `${Math.random() * 100}vw`;
@@ -97,19 +94,15 @@
             const endX = `${Math.random() * 100}vw`;
             const endY = `${Math.random() * 100}vh`;
             
-            // Random rotation
             const startRotate = `${Math.random() * 360}deg`;
             const midRotate = `${Math.random() * 360}deg`;
             const endRotate = `${Math.random() * 360}deg`;
             
-            // Random duration
             const duration = 10 + Math.random() * 20;
             
-            // Random color
             const hue = Math.random() * 360;
             element.style.color = `hsl(${hue}, 100%, 90%)`;
             
-            // Set CSS variables for the animation
             element.style.setProperty('--startX', startX);
             element.style.setProperty('--startY', startY);
             element.style.setProperty('--midX', midX);

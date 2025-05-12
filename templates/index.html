@@ -203,7 +203,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 Onelots. All rights reserved. (Jk it is on github)</p>
+            <p>&copy; 2024-2025 Onelots. All rights reserved. (Jk it is on github)</p>
             <div class="social-links">
                 <a href="https://github.com/Onelots" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                     <i data-feather="github"></i>
@@ -231,10 +231,8 @@
     </footer>
 
     <script>
-        // Initialize Feather icons
         feather.replace();
 
-        // Mobile menu toggle
         const mobileMenuButton = document.querySelector('.mobile-menu-button');
         const mobileMenuClose = document.querySelector('.mobile-menu-close');
         const mobileMenu = document.querySelector('.mobile-menu');
@@ -249,7 +247,6 @@
             document.body.style.overflow = '';
         });
 
-        // Tabs functionality
         const tabButtons = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
 
@@ -257,17 +254,14 @@
             button.addEventListener('click', () => {
                 const tabId = button.getAttribute('data-tab');
                 
-                // Remove active class from all buttons and contents
                 tabButtons.forEach(btn => btn.classList.remove('active'));
                 tabContents.forEach(content => content.classList.remove('active'));
                 
-                // Add active class to current button and content
                 button.classList.add('active');
                 document.getElementById(`${tabId}-devices`).classList.add('active');
             });
         });
 
-        // Header scroll effect
         const header = document.getElementById('main-header');
         
         window.addEventListener('scroll', () => {
@@ -278,7 +272,6 @@
             }
         });
 
-        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -292,7 +285,6 @@
                         behavior: 'smooth'
                     });
                     
-                    // Close mobile menu if open
                     mobileMenu.classList.remove('active');
                     document.body.style.overflow = '';
                 }
