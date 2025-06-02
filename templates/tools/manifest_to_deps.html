@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}XML to Dependencies Converter{% endblock %}
+
+{% block content %}
+<div class="page-section">
+    <div class="container">
+        <h1>XML to Dependencies Converter</h1>
+
+        <form method="post" class="mb-10">
+            <div class="form-group">
+                <label for="device_codename" class="block mb-2 font-semibold">Device Codename:</label>
+                <input type="text" id="device_codename" name="device_codename" value="{{ device_codename }}" required class="input-field"/>
+            </div>
+            <div class="form-group">
+                <label for="xml_content" class="block mb-2 font-semibold">XML Content:</label>
+                <textarea id="xml_content" name="xml_content" rows="10" required class="input-field">{{ request.form.get('xml_content', '') }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Process XML</button>
+        </form>
+
+        {% if repositories %}
+        <h2>Processed XML Repositories</h2>
+
+        {% if error_message %}
+        <div class="error-message">
+            <strong>Error Processing</strong>
+            <span>{{ error_message }}</span>
+        </div>
+        {% endif %}
+
+        <form method="post" class="mb-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Repository</th>
+                        <th>Path</th>
+                        <th>Remote</th>
+                        <th>Branch</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="flex gap-2">
+                                <input type="text" id="remoteForAll" class="input-field" placeholder="Remote for All">
+                                <button type="button" id="applyRemote" onclick="applyToAll('remote_')" class="btn btn-primary">Apply to All</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex gap-2">
+                                <input type="text" id="branchForAll" class="input-field" placeholder="Branch for All">
+                                <button type="button" id="applyBranch" onclick="applyToAll('branch_')" class="btn btn-primary">Apply to All</button>
+                            </div>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for repo in repositories %}
+                    <tr>
+                        <td>{{ repo.repository }}</td>
+                        <td>{{ repo.target_path }}</td>
+                        <td>
+                            <input type="text" name="remote_{{ repo.repository }}"
+                                   placeholder="Enter remote"
+                                   value="{{ request.form.get('remote_' ~ repo.repository, repo.remote) }}"
+                                   class="input-field"/>
+                        </td>
+                        <td>
+                            <input type="text" name="branch_{{ repo.repository }}"
+                                   placeholder="Enter branch"
+                                   value="{{ request.form.get('branch_' ~ repo.repository, repo.branch) }}"
+                                   class="input-field"/>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="hidden" name="repositories" value="{{ repositories_json }}">
+            <input type="hidden" name="device_codename" value="{{ device_codename }}">
+            <button type="submit" name="convert" class="btn btn-primary">Convert to Dependencies</button>
+        </form>
+        {% endif %}
+
+        {% if output %}
+        <h2>Generated Dependencies:</h2>
+        <textarea id="outputText" rows="30" readonly class="input-field">{{ output }}</textarea>
+        <button type="button" onclick="downloadOutput()" class="btn btn-primary">Download as File</button>
+        <script>
+        function downloadOutput() {
+            const text = document.getElementById('outputText').value;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '{{ device_codename}}.dependencies';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        </script>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function applyToAll(fieldType) {
+        // ...
+    }
+
+    function toggleApplyButton(inputId, buttonId) {
+        // ...
+    }
+
+    window.onload = function() {
+        // ...
+    };
+</script>
+{% endblock %}
