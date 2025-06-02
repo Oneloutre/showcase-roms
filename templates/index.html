@@ -1,62 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EvolutionX Custom ROMs</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <meta property="og:title" content="Onelot's personal EvoX mirror">
-    <meta property="og:description" content="Download EvolutionX for your device, maintained by Onelots, and experience Android like never before.">
-    <meta property="og:url" content="https://evox.onelots.fr">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://github.com/onelots.png">
-    <meta property="og:image:width" content="460">
-    <meta property="og:image:height" content="460">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Feather Icons -->
-    <script src="https://unpkg.com/feather-icons"></script>
-</head>
-<body class="dark">
-    <header id="main-header">
-        <div class="container">
-            <nav>
-                <a href="/" class="logo">
-                    <i data-feather="smartphone"></i>
-                    <span>Onelots</span>
-                </a>
-                <ul class="desktop-menu">
-                    <li><a href="#about">💡 About</a></li>
-                    <li><a href="#devices">📱 Devices</a></li>
-                    <li><a href="#features">✨ Features</a></li>
-                    <li><a href="{{ url_for('downloads') }}">💾 Download</a></li>
-                    <li><a href="{{ url_for('testers') }}">⚠️ Testers page</a></li>
-                </ul>
-                <button class="mobile-menu-button" aria-label="Menu">
-                    <i data-feather="menu"></i>
-                </button>
-            </nav>
-        </div>
-    </header>
+{% extends 'base.html' %}
 
-    <div class="mobile-menu">
-        <div class="mobile-menu-header">
-            <button class="mobile-menu-close" aria-label="Close menu">
-                <i data-feather="x"></i>
-            </button>
-        </div>
-        <ul>
-            <li><a href="#about">💡 About</a></li>
-            <li><a href="#devices">📱 Devices</a></li>
-            <li><a href="#features">✨ Features</a></li>
-            <li><a href="{{ url_for('downloads') }}">💾 Download</a></li>
-            <li><a href="{{ url_for('testers') }}">⚠️ Testers page</a></li>
-        </ul>
-    </div>
+{% block title %}EvolutionX Custom ROMs{% endblock %}
 
+{% block content %}
     <main>
         <section id="hero" class="hero-section">
             <div class="container">
@@ -202,36 +148,9 @@
             </div>
         </section>
     </main>
+{% endblock %}
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024-2025 Onelots. All rights reserved. (Jk it is on github)</p>
-            <div class="social-links">
-                <a href="https://github.com/Onelots" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                    <i data-feather="github"></i>
-                </a>
-                <a href="https://twitter.com/0nelots" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                    <i data-feather="twitter"></i>
-                </a>
-                <a href="https://t.me/onelots" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
-                    <i data-feather="send"></i>
-                </a>
-                <a href="https://paypal.me/0nelots" target="_blank" rel="noopener noreferrer" aria-label="PayPal">
-                    <i data-feather="dollar-sign"></i>
-                </a>
-                <a href="https://discord.gg/evolution-x" target="_blank" rel="noopener noreferrer" aria-label="Discord">
-                    <i data-feather="message-circle"></i>
-                </a>
-                <a href="mailto:onelots@onelots.fr" target="_blank" rel="noopener noreferrer" aria-label="Email">
-                    <i data-feather="mail"></i>
-                </a>
-                <a href="/downloads" aria-label="Downloads">
-                    <i data-feather="copy"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
-
+{% block scripts %}
     <script>
         feather.replace();
 
@@ -293,5 +212,4 @@
             });
         });
     </script>
-</body>
-</html>
+{% endblock %}

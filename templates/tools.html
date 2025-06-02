@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-section">
+    <div class="container">
+        <h1 class="page-title">Tools</h1>
+        <div class="tools-grid">
+            {% for tool in tools %}
+            <a href="{{ tool.link }}" class="tool-card">
+                <div class="tool-icon">
+                    <i data-feather="{{ tool.icon }}"></i>
+                </div>
+                <h3>{{ tool.name }}</h3>
+                <p>{{ tool.description }}</p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

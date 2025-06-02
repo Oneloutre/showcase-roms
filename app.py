@@ -163,7 +163,13 @@ def when():
         devices.append(device)
     return render_template('when.html', devices=devices)
 
-
+@app.route('/tools')
+def tools():
+    tools_data = [
+        {'name': 'Manifest to Dependencies', 'description': 'This tool will convert your device.xml to a clean evolution.dependencies file', 'link': '/manifest_to_dependencies', 'icon': 'file-text'},
+        {'name': 'Mystery tool', 'description': 'Coming up later', 'link': '/second_tool', 'icon': 'message-square'},
+    ]
+    return render_template('tools.html', tools=tools_data)
 
 @app.errorhandler(403)
 def forbidden(e):
