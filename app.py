@@ -299,6 +299,18 @@ def manifest_to_deps():
 
     return render_template('tools/manifest_to_deps.html', output='', repositories=[], device_codename='', xml_content='', error_message='')
 
+objectifs = {
+    "objectif1": {
+        "nom": "New screen for the Sony Xperia 10 IV",
+        "description": "My Sony Xperia 10 IV's screen is broken, so I need to replace it with a new one. But it costs around $90.",
+        "pourcentage": 1    }
+}
+
+
+@app.route('/goals')
+def objectifs_func():
+    return render_template('objectives.html', objectifs=objectifs)
+
 
 @app.errorhandler(403)
 def forbidden(e):

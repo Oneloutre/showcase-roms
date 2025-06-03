@@ -1080,3 +1080,95 @@ textarea:focus {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+/* here I'll put goals */
+
+.objectif {
+    margin-bottom: 60px;
+    padding: 30px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.progress-bar-container {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 100%;
+    background-color: var(--border);
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+    border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
+}
+
+.progress-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: var(--on-background);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.donation-methods {
+    margin-top: 40px;
+}
+
+.donation-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.donation-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: rgba(var(--primary-rgb), 0.05);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    color: var(--on-background);
+    transition: var(--transition);
+    width: fit-content;
+}
+
+.donation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.donation-card i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.donation-card span {
+    font-size: 1rem;
+    font-weight: 500;
+}

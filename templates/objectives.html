@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Goals{% endblock %}
+
+{% block content %}
+<div class="page-section">
+    <div class="container">
+        <h1 class="text-center">Goals</h1>
+        {% for objectif in objectifs.values() %}
+            <div class="objectif">
+                <h2 class="text-center">{{ objectif.nom }} <span class="pourcentage">({{ objectif.pourcentage }}% achieved)</span></h2>
+                <p class="text-center">{{ objectif.description }}</p>
+                {% if objectif.banniere %}
+                    <div class="objectif-banner">
+                        <img src="{{ objectif.banniere }}" alt="Bannière de l'objectif">
+                    </div>
+                {% endif %}
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: {{ objectif.pourcentage }}%; background-color: var(--primary);"></div>
+                    </div>
+                    <span class="progress-text">{{ objectif.pourcentage }}%</span>
+                </div>
+                <div class="donation-methods">
+                    <h3 class="text-center">Help us reach this goal:</h3>
+                    <div class="donation-cards">
+                        <a href="https://www.paypal.com/0nelots" target="_blank" class="donation-card">
+                            <i class="fab fa-paypal"></i>
+                            <span>PayPal</span>
+                        </a>
+                        <a href="https://buymeacoffee.com/onelots" target="_blank" class="donation-card">
+                            <i class="fa fa-buymeacoffee"></i>
+                            <span>Buy me a Coffee</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
