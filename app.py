@@ -132,13 +132,14 @@ official_devices = {
     "Xiaomi Redmi Note 9 Pro": {"codename": "joyeuse (MiAtoll serie)", "image": "https://media2.gsm55.com/media/device/4572/4572.png", "download": "https://evolution-x.org/downloads/miatoll"},
     "Xiaomi Redmi Note 9 Pro (India)": {"codename": "curtana (MiAtoll serie)", "image": "https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1595220196.89229402!400x400!85.png", "download": "https://evolution-x.org/downloads/miatoll"},
     "Xiaomi Redmi Note 9 Pro Max": {"codename": "excalibur (MiAtoll serie)", "image": "https://media2.gsm55.com/media/device/4572/4572.png", "download": "https://evolution-x.org/downloads/miatoll"},
-    "Xiaomi Redmi Note 10 lite": {"codename": "curtana (MiAtoll serie)", "image": "https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1588937747.86846999!400x400!85.png", "download": "https://evolution-x.org/downloads/miatoll"}
+    "Xiaomi Redmi Note 10 lite": {"codename": "curtana (MiAtoll serie)", "image": "https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1588937747.86846999!400x400!85.png", "download": "https://evolution-x.org/downloads/miatoll"},
+    "Redmi Note 11 Pro 5G": {"codename": "Veux", "image": "https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1648199221.0063088.png", "download": "https://evolution-x.org/downloads/veux"}
+
 }
 
 unofficial_devices = {
     "Motorola G30\n(Work in progress.)": {"codename": "caprip", "image": "https://storage.comprasmartphone.com/smartphones/motorola-moto-g30.png", "download": "https://evox.onelots.fr/download"},
     "Oneplus Nord N10 5G\n(Work in progress.)": {"codename": "billie", "image": "https://oasis.opstatics.com/content/dam/oasis/page/billie/N10-Frame11.png", "download": "https://evox.onelots.fr/download"},
-    "Redmi Note 11 Pro 5G\n(Work in progress.)": {"codename": "Veux", "image": "https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1648199221.0063088.png", "download": "https://evolution-x.org/downloads/veux"},
     "Redmi Note 11S\n(Work in progress.)": {"codename": "fleur", "image": "https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1643013636.25845935.png", "download": "https://evox.onelots.fr/download"},
     "Samsung S9+\n(Work in progress.)": {"codename": "star2lte", "image": "https://www.thekase.com/on/demandware.static/-/Sites-tk-product/default/dw95aa7775/38937129/132901_large.png", "download": "https://evox.onelots.fr/download"},
 }
