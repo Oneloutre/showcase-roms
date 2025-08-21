@@ -9,3 +9,5 @@ gunicorn==23.0.0
 gevent==24.11.1
 cloudscraper==1.2.71
 beautifulsoup4==4.12.3
+boto3==1.40.13
+botocore==1.40.13
