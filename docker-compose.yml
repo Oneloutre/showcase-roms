@@ -6,5 +6,5 @@ services:
     ports:
       - "3000:8000"
     volumes:
-      - /media/hdd/data/EvolutionX/:/app/downloads/
-
+      - ./.env:/app/.env
+      -
