@@ -1,11 +1,115 @@
-from flask import Flask, render_template, request, abort, send_file
+from flask import Flask, render_template, request, abort, redirect
 import xml.etree.ElementTree as ET
 import json
 import os
 import cloudscraper
 from bs4 import BeautifulSoup
 
-DOWNLOAD_DIR = ('test')
+import boto3
+from botocore.config import Config
+from botocore.exceptions import ClientError
+
+ACCOUNT_ID = os.getenv("R2_ACCOUNT_ID")
+ACCESS_KEY = os.getenv("R2_ACCESS_KEY_ID")
+SECRET_KEY = os.getenv("R2_SECRET_ACCESS_KEY")
+BUCKET     = os.getenv("R2_BUCKET")
+
+DOWNLOADS_PREFIX = os.getenv("R2_DOWNLOADS_PREFIX", "downloads/")
+TESTERS_PREFIX   = os.getenv("R2_TESTERS_PREFIX", "testers/")
+
+if not all([ACCOUNT_ID, ACCESS_KEY, SECRET_KEY, BUCKET]):
+    raise RuntimeError("R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY / R2_BUCKET manquants.")
+
+s3 = boto3.client(
+    "s3",
+    endpoint_url=f"https://{ACCOUNT_ID}.r2.cloudflarestorage.com",
+    aws_access_key_id=ACCESS_KEY,
+    aws_secret_access_key=SECRET_KEY,
+    region_name="auto",
+    config=Config(signature_version="s3v4", s3={"addressing_style": "path"}),
+)
+
+def _norm_relpath(p: str) -> str:
+    p = (p or "").replace("\\", "/")
+    parts = []
+    for seg in p.split("/"):
+        if seg in ("", "."):
+            continue
+        if seg == "..":
+            if parts:
+                parts.pop()
+            continue
+        parts.append(seg)
+    return "/".join(parts)
+
+def _ensure_trailing_slash(p: str) -> str:
+    return p if p.endswith("/") else (p + "/")
+
+def _join_prefix(base_prefix: str, user_rel: str) -> str:
+    base = _ensure_trailing_slash(base_prefix.lstrip("/"))
+    rel = _norm_relpath(user_rel)
+    return base + rel
+
+def _prefix_for_dir(base_prefix: str, user_rel: str) -> str:
+    return _ensure_trailing_slash(_join_prefix(base_prefix, user_rel))
+
+def _is_dir(prefix: str) -> bool:
+    pref = _ensure_trailing_slash(prefix)
+    paginator = s3.get_paginator("list_objects_v2")
+    for page in paginator.paginate(Bucket=BUCKET, Prefix=pref, Delimiter="/", PaginationConfig={"PageSize": 1000}):
+        if page.get("CommonPrefixes"):
+            return True
+        for obj in page.get("Contents", []):
+            if obj["Key"] != pref:
+                return True
+    return False
+
+def _file_exists(key: str) -> bool:
+    try:
+        s3.head_object(Bucket=BUCKET, Key=key)
+        return True
+    except ClientError as e:
+        if e.response.get("ResponseMetadata", {}).get("HTTPStatusCode") == 404 or e.response.get("Error", {}).get("Code") in ("404", "NoSuchKey", "NotFound"):
+            return False
+        return False
+
+def _list_dir(prefix: str):
+    pref = _ensure_trailing_slash(prefix)
+    dirs, files = [], []
+    paginator = s3.get_paginator("list_objects_v2")
+    for page in paginator.paginate(Bucket=BUCKET, Prefix=pref, Delimiter="/", PaginationConfig={"PageSize": 1000}):
+        for cp in page.get("CommonPrefixes", []):
+            dirs.append(cp["Prefix"])
+        for obj in page.get("Contents", []):
+            key = obj["Key"]
+            if key.endswith("/") or key == pref:
+                continue
+            files.append({"Key": key, "Size": obj.get("Size", 0)})
+    return dirs, files
+
+def _sum_size(prefix: str) -> int:
+    total = 0
+    paginator = s3.get_paginator("list_objects_v2")
+    for page in paginator.paginate(Bucket=BUCKET, Prefix=prefix, PaginationConfig={"PageSize": 1000}):
+        for obj in page.get("Contents", []):
+            if not obj["Key"].endswith("/"):
+                total += obj.get("Size", 0)
+    return total
+
+def _human(nbytes: int) -> str:
+    if nbytes < 1000:
+        return f"{nbytes} B"
+    if nbytes < 1_000_000:
+        return f"{nbytes/1_000:.2f} KB"
+    if nbytes < 1_000_000_000:
+        return f"{nbytes/1_000_000:.2f} MB"
+    return f"{nbytes/1_000_000_000:.2f} GB"
+
+def _presign_get(key: str, filename=None, expires: int = 300) -> str:
+    params = {"Bucket": BUCKET, "Key": key}
+    if filename:
+        params["ResponseContentDisposition"] = f'attachment; filename="{filename}"'
+    return s3.generate_presigned_url("get_object", Params=params, ExpiresIn=expires)
 
 app = Flask(__name__)
 
@@ -31,7 +135,6 @@ official_devices = {
     "Xiaomi Redmi Note 10 lite": {"codename": "curtana (MiAtoll serie)", "image": "https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1588937747.86846999!400x400!85.png", "download": "https://evolution-x.org/downloads/miatoll"}
 }
 
-
 unofficial_devices = {
     "Motorola G30\n(Work in progress.)": {"codename": "caprip", "image": "https://storage.comprasmartphone.com/smartphones/motorola-moto-g30.png", "download": "https://evox.onelots.fr/download"},
     "Oneplus Nord N10 5G\n(Work in progress.)": {"codename": "billie", "image": "https://oasis.opstatics.com/content/dam/oasis/page/billie/N10-Frame11.png", "download": "https://evox.onelots.fr/download"},
@@ -44,117 +147,111 @@ unofficial_devices = {
 def home():
     return render_template('index.html', official_devices=official_devices, unofficial_devices=unofficial_devices)
 
-def check_size(directory_path):
-    total_size = 0
-    for dirpath, dirnames, filenames in os.walk(directory_path):
-        for filename in filenames:
-            filepath = os.path.join(dirpath, filename)
-            if os.path.isfile(filepath):
-                total_size += os.path.getsize(filepath)
-    if total_size < 1000:
-        return f"{total_size} B"
-    elif total_size < 1000 * 1000:
-        return f"{total_size / 1000:.2f} KB"
-    elif total_size < 1000 * 1000 * 1000:
-        return f"{total_size / 1000 / 1000:.2f} MB"
-    else:
-        return f"{total_size / 1000 / 1000 / 1000:.2f} GB"
-
+def check_size_r2(prefix: str) -> str:
+    return _human(_sum_size(prefix))
 
 @app.route('/downloads')
 def downloads():
     path = request.args.get('path', '')
-    base_dir = os.environ.get('DOWNLOAD_DIR', 'downloads')
-    current_path = os.path.join(base_dir, path)
+    key_dir = _prefix_for_dir(DOWNLOADS_PREFIX, path)
 
-    try:
-        if not os.path.exists(current_path):
-            abort(404)
+    if not _is_dir(key_dir):
+        file_key = _join_prefix(DOWNLOADS_PREFIX, path)
+        if _file_exists(file_key):
+            filename = os.path.basename(file_key.rstrip("/"))
+            url = _presign_get(file_key, filename=filename, expires=300)
+            return redirect(url, code=302)
+        abort(404)
 
-        if not os.path.realpath(current_path).startswith(os.path.realpath(base_dir)):
-            abort(403)
+    dirs, files = _list_dir(key_dir)
+    items = []
 
-        items = []
-        if os.path.isdir(current_path):
-            for item in os.listdir(current_path):
-                item_path = os.path.join(current_path, item)
-                is_dir = os.path.isdir(item_path)
-                items.append({
-                    'name': item,
-                    'is_dir': is_dir,
-                    'path': os.path.join(path, item) if path else item
-                })
+    for d in dirs:
+        name = d[len(_ensure_trailing_slash(DOWNLOADS_PREFIX)):]
+        name = name.rstrip("/").split("/")[-1]
+        rel_path = _norm_relpath(path)
+        item_rel = f"{rel_path}/{name}" if rel_path else name
+        items.append({"name": name, "is_dir": True, "path": item_rel})
 
-            items.sort(key=lambda x: (not x['is_dir'], x['name'].lower()))
+    for f in files:
+        key = f["Key"]
+        name = os.path.basename(key)
+        rel_path = _norm_relpath(path)
+        item_rel = f"{rel_path}/{name}" if rel_path else name
+        items.append({"name": name, "is_dir": False, "path": item_rel})
 
-            parent_path = os.path.dirname(path) if path else None
-            total_size = check_size('downloads')
-            folder_size = check_size(current_path)
-            return render_template('downloads.html', items=items, current_path=path, parent_path=parent_path, total_size=total_size, folder_size=folder_size)
-        else:
-            return send_file(current_path, as_attachment=True, mimetype="application/octet-stream")
-    except PermissionError:
-        abort(403)
+    items.sort(key=lambda x: (not x['is_dir'], x['name'].lower()))
 
+    parent_path = "/".join(_norm_relpath(path).split("/")[:-1]) if path else None
+    total_size = check_size_r2(_ensure_trailing_slash(DOWNLOADS_PREFIX))
+    folder_size = check_size_r2(key_dir)
 
-# Yes I'm lazy so I'll just copy/paste
+    return render_template('downloads.html',
+                           items=items,
+                           current_path=_norm_relpath(path),
+                           parent_path=parent_path,
+                           total_size=total_size,
+                           folder_size=folder_size)
+
 @app.route('/testers')
 def testers():
     path = request.args.get('path', '')
-    base_dir = os.environ.get('DOWNLOAD_DIR', 'testers')
-    current_path = os.path.join(base_dir, path)
+    key_dir = _prefix_for_dir(TESTERS_PREFIX, path)
 
-    try:
-        if not os.path.exists(current_path):
-            abort(404)
+    if not _is_dir(key_dir):
+        file_key = _join_prefix(TESTERS_PREFIX, path)
+        if _file_exists(file_key):
+            filename = os.path.basename(file_key.rstrip("/"))
+            url = _presign_get(file_key, filename=filename, expires=300)
+            return redirect(url, code=302)
+        abort(404)
 
-        if not os.path.realpath(current_path).startswith(os.path.realpath(base_dir)):
-            abort(403)
+    dirs, files = _list_dir(key_dir)
+    items = []
 
-        items = []
-        if os.path.isdir(current_path):
-            for item in os.listdir(current_path):
-                item_path = os.path.join(current_path, item)
-                is_dir = os.path.isdir(item_path)
-                items.append({
-                    'name': item,
-                    'is_dir': is_dir,
-                    'path': os.path.join(path, item) if path else item
-                })
+    for d in dirs:
+        name = d[len(_ensure_trailing_slash(TESTERS_PREFIX)):]
+        name = name.rstrip("/").split("/")[-1]
+        rel_path = _norm_relpath(path)
+        item_rel = f"{rel_path}/{name}" if rel_path else name
+        items.append({"name": name, "is_dir": True, "path": item_rel})
 
-            items.sort(key=lambda x: (not x['is_dir'], x['name'].lower()))
+    for f in files:
+        key = f["Key"]
+        name = os.path.basename(key)
+        rel_path = _norm_relpath(path)
+        item_rel = f"{rel_path}/{name}" if rel_path else name
+        items.append({"name": name, "is_dir": False, "path": item_rel})
 
-            parent_path = os.path.dirname(path) if path else None
-            total_size = check_size('testers')
-            folder_size = check_size(current_path)
-            return render_template('testers.html', items=items, current_path=path, parent_path=parent_path, total_size=total_size, folder_size=folder_size)
-        else:
-            return send_file(current_path, as_attachment=True, mimetype="application/octet-stream")
-    except PermissionError:
-        abort(403)
+    items.sort(key=lambda x: (not x['is_dir'], x['name'].lower()))
+
+    parent_path = "/".join(_norm_relpath(path).split("/")[:-1]) if path else None
+    total_size = check_size_r2(_ensure_trailing_slash(TESTERS_PREFIX))
+    folder_size = check_size_r2(key_dir)
+
+    return render_template('testers.html',
+                           items=items,
+                           current_path=_norm_relpath(path),
+                           parent_path=parent_path,
+                           total_size=total_size,
+                           folder_size=folder_size)
 
 @app.route('/eta')
 def eta():
     return render_template('eta.html')
 
-
 @app.route('/when')
 def when():
     scraper = cloudscraper.create_scraper()
-
     url = 'https://hel-eu-1.ci.evolution-x.org/'
-
     response = scraper.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
-
     table = soup.find('div', {'id': 'view-message'}).find('table')
-
     head = table.find('thead')
     days = []
     devices = []
     for th in head.find_all('th'):
         days.append(th.text)
-
     for tr in table.find('tbody').find_all('tr'):
         device = {}
         for i, td in enumerate(tr.find_all('td')):
@@ -173,34 +270,29 @@ def tools():
     ]
     return render_template('tools.html', tools=tools_data)
 
-# ------------------ KANGED TO AIDAN WARNER ------------------
-
 def parse_xml(xml_content):
     root = ET.fromstring(xml_content)
     repositories = []
-
     for project in root.findall('project'):
         repo_info = {
             "repository": project.get('name'),
             "target_path": project.get('path'),
-            "remote": project.get('remote'),  # Capture the remote
-            "branch": project.get('revision', '')  # Use revision as branch
+            "remote": project.get('remote'),
+            "branch": project.get('revision', '')
         }
         repositories.append(repo_info)
-    
     return repositories
 
 def convert_to_dependencies(repositories, branch_mapping, remote_mapping):
     dependencies = []
     for repo in repositories:
         dep = {
-            "remote": remote_mapping.get(repo["repository"], repo["remote"]),  # Use the provided remote or default
+            "remote": remote_mapping.get(repo["repository"], repo["remote"]),
             "repository": repo["repository"],
             "target_path": repo["target_path"],
-            "branch": branch_mapping.get(repo["repository"], repo["branch"] or '')  # Use user branch or default revision
+            "branch": branch_mapping.get(repo["repository"], repo["branch"] or '')
         }
         dependencies.append(dep)
-    
     return json.dumps(dependencies, indent=2)
 
 @app.route('/manifest_to_dependencies', methods=['GET', 'POST'])
@@ -210,16 +302,37 @@ def manifest_to_deps():
     error_message = ""
 
     if request.method == 'POST':
-        if 'xml_content' in request.form:
-            # Process XML
-            xml_content = request.form.get('xml_content')  # Capture the XML content entered
+        if 'xml_content' in request.form and 'convert' not in request.form:
+            xml_content = request.form.get('xml_content', '')
             device_codename = request.form.get('device_codename', "")
-            if xml_content:
-                repositories = parse_xml(xml_content)  # Parse XML content
-                repositories_json = json.dumps(repositories)  # Serialize repositories
-                return render_template('tools/manifest_to_deps.html', repositories=repositories, repositories_json=repositories_json, device_codename=device_codename, xml_content=xml_content, error_message=error_message)  # Pass back xml_content
+            if xml_content.strip():
+                try:
+                    repositories = parse_xml(xml_content)
+                except ET.ParseError as e:
+                    return render_template(
+                        'tools/manifest_to_deps.html',
+                        output=f"XML parse error: {e}",
+                        repositories=[],
+                        repositories_json="[]",
+                        device_codename=device_codename,
+                        xml_content=xml_content,
+                        error_message="Invalid XML"
+                    )
+                repositories_json = json.dumps(repositories)
+                return render_template('tools/manifest_to_deps.html',
+                                       repositories=repositories,
+                                       repositories_json=repositories_json,
+                                       device_codename=device_codename,
+                                       xml_content=xml_content,
+                                       error_message=error_message)
+            return render_template('tools/manifest_to_deps.html',
+                                   repositories=[],
+                                   repositories_json="[]",
+                                   device_codename=device_codename,
+                                   xml_content=xml_content,
+                                   error_message="No XML provided")
 
-        elif 'convert' in request.form:
+        if 'convert' in request.form:
             branch_mapping = {}
             remote_mapping = {}
             device_codename = request.form.get('device_codename', "")
@@ -236,55 +349,40 @@ def manifest_to_deps():
                     output="Error decoding JSON: " + str(e),
                     device_codename=device_codename,
                     xml_content=xml_content,
-                    repositories_json="[]"
+                    repositories_json="[]",
+                    repositories=[]
                 )
 
-            # Collect user-defined branches and remotes
-            for repo in request.form:
-                if repo.startswith('branch_'):
-                    repo_name = repo.split('_', 1)[1]
-                    branch_value = request.form[repo].strip()
-                    branch_mapping[repo_name] = branch_value
-
-                elif repo.startswith('remote_'):
-                    repo_name = repo.split('_', 1)[1]
-                    remote_mapping[repo_name] = request.form[repo].strip()
+            for k in request.form:
+                if k.startswith('branch_'):
+                    repo_name = k.split('_', 1)[1]
+                    branch_mapping[repo_name] = request.form[k].strip()
+                elif k.startswith('remote_'):
+                    repo_name = k.split('_', 1)[1]
+                    remote_mapping[repo_name] = request.form[k].strip()
 
             remote_for_all = request.form.get('remoteForAll', '').strip()
             branch_for_all = request.form.get('branchForAll', '').strip()
-
-            # Apply to all if provided
             if remote_for_all:
                 for repo in repositories:
                     remote_mapping[repo["repository"]] = remote_for_all
-
             if branch_for_all:
                 for repo in repositories:
                     branch_mapping[repo["repository"]] = branch_for_all
 
-            # --- Check for empty fields ---
-            missing_fields = False
             for repo in repositories:
                 repo_name = repo["repository"]
-                remote_val = remote_mapping.get(repo_name, "").strip()
-                branch_val = branch_mapping.get(repo_name, "").strip()
-                if not remote_val or not branch_val:
-                    missing_fields = True
-                    break
+                if not remote_mapping.get(repo_name, "").strip() or not branch_mapping.get(repo_name, "").strip():
+                    return render_template(
+                        'tools/manifest_to_deps.html',
+                        repositories=repositories,
+                        repositories_json=json.dumps(repositories),
+                        device_codename=device_codename,
+                        xml_content=xml_content,
+                        error_message="All Remote and Branch fields must be filled out."
+                    )
 
-            if missing_fields:
-                error_message = "All Remote and Branch fields must be filled out."
-                return render_template(
-                    'tools/manifest_to_deps.html',
-                    repositories=repositories,
-                    repositories_json=json.dumps(repositories),
-                    device_codename=device_codename,
-                    xml_content=xml_content,
-                    error_message=error_message
-                )
-            # --- End check ---
 
-            # Generate dependencies based on user branches and remotes
             dependencies = convert_to_dependencies(repositories, branch_mapping, remote_mapping)
             return render_template(
                 'tools/manifest_to_deps.html',
@@ -297,20 +395,25 @@ def manifest_to_deps():
                 error_message=""
             )
 
-    return render_template('tools/manifest_to_deps.html', output='', repositories=[], device_codename='', xml_content='', error_message='')
+    return render_template('tools/manifest_to_deps.html',
+                           output='',
+                           repositories=[],
+                           repositories_json="[]",
+                           device_codename='',
+                           xml_content='',
+                           error_message='')
 
 objectifs = {
     "objectif1": {
         "nom": "New screen for the Sony Xperia 10 IV",
         "description": "My Sony Xperia 10 IV's screen is broken, so I need to replace it with a new one. But it costs around $90.",
-        "pourcentage": 1    }
+        "pourcentage": 1
+    }
 }
-
 
 @app.route('/goals')
 def objectifs_func():
     return render_template('objectives.html', objectifs=objectifs)
-
 
 @app.errorhandler(403)
 def forbidden(e):
